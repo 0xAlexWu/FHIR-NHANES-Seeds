@@ -1,0 +1,6 @@
+metric,value
+total_observation_like_candidates,205987
+likely_numeric_observation_like_candidates,205987
+candidates_with_units,204448
+candidates_without_units,1539
+top_pairing_friendly_measure_types,Diastolic: Blood pres [n=19959]; Systolic: Blood pres [n=19959]; Weight [n=8580]; Standing Height [n=8016]; Body Mass Index (kg/m^2) [n=8005]
