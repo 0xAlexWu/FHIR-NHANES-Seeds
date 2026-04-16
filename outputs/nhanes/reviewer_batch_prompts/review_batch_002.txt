@@ -1,0 +1,304 @@
+You are acting as an external reviewer in a clinical-data-to-FHIR pairing evaluation workflow.
+
+You will review multiple candidate paired samples.
+Apply the same scoring rubric independently to each item.
+Do not compare items with each other.
+Judge each pair only on its own merits.
+
+For each item, return:
+- pair_id
+- faithfulness
+- unsupported_fact
+- omission
+- naturalness
+- context_leakage
+- short_rationale
+- flag_type
+
+Scoring rubric:
+- faithfulness: 1 = faithful, 0 = not faithful
+- unsupported_fact: 1 = yes, 0 = no
+- omission: 1 = yes, 0 = no
+- naturalness: 1 to 5
+- context_leakage: 1 = yes, 0 = no
+
+Allowed flag_type values:
+- none
+- possible_hallucination
+- possible_omission
+- awkward_input
+- context_leakage
+- style_uncertainty
+- other
+
+Review principles:
+1. Only judge alignment between the shown input text and the shown target FHIR JSON.
+2. Do not assume facts from linked resources unless explicitly present in the shown target JSON.
+3. Do not reward unsupported extra detail.
+4. Be conservative about unsupported facts.
+5. Be conservative about omission of core information.
+6. If the target is sparse, do not punish the input for not containing unavailable details.
+
+Return only a JSON array.
+Do not include markdown.
+Do not include any text before or after the JSON array.
+
+
+ITEM 1
+pair_id: NHANES-P15-06-concise_clinical
+resource_type: Observation
+input_style: concise_clinical
+input_text:
+Weight: 13.7 kg
+target_fhir_json:
+{
+  "code": {
+    "text": "Weight"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93703"
+    }
+  },
+  "valueQuantity": {
+    "unit": "kg",
+    "value": 13.7
+  }
+}
+
+
+ITEM 2
+pair_id: NHANES-P15-06-semi_structured
+resource_type: Observation
+input_style: semi_structured
+input_text:
+BMX_J
+participant: 93703
+measure = Weight
+value = 13.7
+unit = kg
+target_fhir_json:
+{
+  "code": {
+    "text": "Weight"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93703"
+    }
+  },
+  "valueQuantity": {
+    "unit": "kg",
+    "value": 13.7
+  }
+}
+
+
+ITEM 3
+pair_id: NHANES-P15-07-concise_clinical
+resource_type: Observation
+input_style: concise_clinical
+input_text:
+Standing Height: 94.2 cm
+target_fhir_json:
+{
+  "code": {
+    "text": "Standing Height"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93704"
+    }
+  },
+  "valueQuantity": {
+    "unit": "cm",
+    "value": 94.2
+  }
+}
+
+
+ITEM 4
+pair_id: NHANES-P15-07-semi_structured
+resource_type: Observation
+input_style: semi_structured
+input_text:
+BMX_J
+participant: 93704
+measure = Standing Height
+value = 94.2
+unit = cm
+target_fhir_json:
+{
+  "code": {
+    "text": "Standing Height"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93704"
+    }
+  },
+  "valueQuantity": {
+    "unit": "cm",
+    "value": 94.2
+  }
+}
+
+
+ITEM 5
+pair_id: NHANES-P15-08-concise_clinical
+resource_type: Observation
+input_style: concise_clinical
+input_text:
+Body Mass Index (kg/m^2): 31.7 kg/m^2
+target_fhir_json:
+{
+  "code": {
+    "text": "Body Mass Index (kg/m^2)"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93705"
+    }
+  },
+  "valueQuantity": {
+    "unit": "kg/m^2",
+    "value": 31.7
+  }
+}
+
+
+ITEM 6
+pair_id: NHANES-P15-08-semi_structured
+resource_type: Observation
+input_style: semi_structured
+input_text:
+BMX_J
+participant: 93705
+measure = Body Mass Index (kg/m^2)
+value = 31.7
+unit = kg/m^2
+target_fhir_json:
+{
+  "code": {
+    "text": "Body Mass Index (kg/m^2)"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93705"
+    }
+  },
+  "valueQuantity": {
+    "unit": "kg/m^2",
+    "value": 31.7
+  }
+}
+
+
+ITEM 7
+pair_id: NHANES-P15-09-concise_clinical
+resource_type: Observation
+input_style: concise_clinical
+input_text:
+Systolic: Blood pres: 112 mm Hg
+target_fhir_json:
+{
+  "code": {
+    "text": "Systolic: Blood pres"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93706"
+    }
+  },
+  "valueQuantity": {
+    "unit": "mm Hg",
+    "value": 112
+  }
+}
+
+
+ITEM 8
+pair_id: NHANES-P15-09-semi_structured
+resource_type: Observation
+input_style: semi_structured
+input_text:
+BPX_J
+participant: 93706
+measure = Systolic: Blood pres
+value = 112
+unit = mm Hg
+target_fhir_json:
+{
+  "code": {
+    "text": "Systolic: Blood pres"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93706"
+    }
+  },
+  "valueQuantity": {
+    "unit": "mm Hg",
+    "value": 112
+  }
+}
+
+
+ITEM 9
+pair_id: NHANES-P15-10-concise_clinical
+resource_type: Observation
+input_style: concise_clinical
+input_text:
+Diastolic: Blood pres: 38 mm Hg
+target_fhir_json:
+{
+  "code": {
+    "text": "Diastolic: Blood pres"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93707"
+    }
+  },
+  "valueQuantity": {
+    "unit": "mm Hg",
+    "value": 38
+  }
+}
+
+
+ITEM 10
+pair_id: NHANES-P15-10-semi_structured
+resource_type: Observation
+input_style: semi_structured
+input_text:
+BPX_J
+participant: 93707
+measure = Diastolic: Blood pres
+value = 38
+unit = mm Hg
+target_fhir_json:
+{
+  "code": {
+    "text": "Diastolic: Blood pres"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93707"
+    }
+  },
+  "valueQuantity": {
+    "unit": "mm Hg",
+    "value": 38
+  }
+}

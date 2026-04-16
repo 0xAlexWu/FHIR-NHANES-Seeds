@@ -1,0 +1,479 @@
+You are acting as an external reviewer in a clinical-data-to-FHIR pairing evaluation workflow.
+
+You will review multiple candidate paired samples.
+Apply the same scoring rubric independently to each item.
+Do not compare items with each other.
+Judge each pair only on its own merits.
+
+For each item, return:
+- pair_id
+- faithfulness
+- unsupported_fact
+- omission
+- naturalness
+- context_leakage
+- short_rationale
+- flag_type
+
+Scoring rubric:
+- faithfulness: 1 = faithful, 0 = not faithful
+- unsupported_fact: 1 = yes, 0 = no
+- omission: 1 = yes, 0 = no
+- naturalness: 1 to 5
+- context_leakage: 1 = yes, 0 = no
+
+Allowed flag_type values:
+- none
+- possible_hallucination
+- possible_omission
+- awkward_input
+- context_leakage
+- style_uncertainty
+- other
+
+Review principles:
+1. Only judge alignment between the shown input text and the shown target FHIR JSON.
+2. Do not assume facts from linked resources unless explicitly present in the shown target JSON.
+3. Do not reward unsupported extra detail.
+4. Be conservative about unsupported facts.
+5. Be conservative about omission of core information.
+6. If the target is sparse, do not punish the input for not containing unavailable details.
+
+Return only a JSON array.
+Do not include markdown.
+Do not include any text before or after the JSON array.
+
+
+ITEM 1
+pair_id: NHANES-P15-01-concise_clinical
+resource_type: Patient
+input_style: concise_clinical
+input_text:
+Gender: Female; Age in years at screening: 35 years; Race/Hispanic origin: Non-Hispanic White; Country of birth: Born in 50 US states or Washington, DC; Citizenship status: Citizen by birth or naturalization; Marital status: Married; Pregnancy status at exam: Yes, positive lab pregnancy test or self-reported pregnant at exam
+target_fhir_json:
+{
+  "extension": [
+    {
+      "url": "urn:nhanes:age_years",
+      "valueInteger": 35
+    },
+    {
+      "url": "urn:nhanes:race_ethnicity",
+      "valueString": "Non-Hispanic White"
+    },
+    {
+      "url": "urn:nhanes:country_of_birth",
+      "valueString": "Born in 50 US states or Washington, DC"
+    },
+    {
+      "url": "urn:nhanes:citizenship_status",
+      "valueString": "Citizen by birth or naturalization"
+    },
+    {
+      "url": "urn:nhanes:marital_status",
+      "valueString": "Married"
+    },
+    {
+      "url": "urn:nhanes:pregnancy_status",
+      "valueString": "Yes, positive lab pregnancy test or self-reported pregnant at exam"
+    }
+  ],
+  "gender": "female",
+  "identifier": [
+    {
+      "value": "93929"
+    }
+  ],
+  "resourceType": "Patient"
+}
+
+
+ITEM 2
+pair_id: NHANES-P15-01-semi_structured
+resource_type: Patient
+input_style: semi_structured
+input_text:
+DEMO_J
+participant: 93929
+Gender = Female
+Age in years at screening = 35 years
+Race/Hispanic origin = Non-Hispanic White
+Country of birth = Born in 50 US states or Washington, DC
+Citizenship status = Citizen by birth or naturalization
+Marital status = Married
+Pregnancy status at exam = Yes, positive lab pregnancy test or self-reported pregnant at exam
+target_fhir_json:
+{
+  "extension": [
+    {
+      "url": "urn:nhanes:age_years",
+      "valueInteger": 35
+    },
+    {
+      "url": "urn:nhanes:race_ethnicity",
+      "valueString": "Non-Hispanic White"
+    },
+    {
+      "url": "urn:nhanes:country_of_birth",
+      "valueString": "Born in 50 US states or Washington, DC"
+    },
+    {
+      "url": "urn:nhanes:citizenship_status",
+      "valueString": "Citizen by birth or naturalization"
+    },
+    {
+      "url": "urn:nhanes:marital_status",
+      "valueString": "Married"
+    },
+    {
+      "url": "urn:nhanes:pregnancy_status",
+      "valueString": "Yes, positive lab pregnancy test or self-reported pregnant at exam"
+    }
+  ],
+  "gender": "female",
+  "identifier": [
+    {
+      "value": "93929"
+    }
+  ],
+  "resourceType": "Patient"
+}
+
+
+ITEM 3
+pair_id: NHANES-P15-02-concise_clinical
+resource_type: Patient
+input_style: concise_clinical
+input_text:
+Gender: Male; Age in years at screening: 40 years; Race/Hispanic origin: Non-Hispanic White; Country of birth: Born in 50 US states or Washington, DC; Citizenship status: Citizen by birth or naturalization; Marital status: Married
+target_fhir_json:
+{
+  "extension": [
+    {
+      "url": "urn:nhanes:age_years",
+      "valueInteger": 40
+    },
+    {
+      "url": "urn:nhanes:race_ethnicity",
+      "valueString": "Non-Hispanic White"
+    },
+    {
+      "url": "urn:nhanes:country_of_birth",
+      "valueString": "Born in 50 US states or Washington, DC"
+    },
+    {
+      "url": "urn:nhanes:citizenship_status",
+      "valueString": "Citizen by birth or naturalization"
+    },
+    {
+      "url": "urn:nhanes:marital_status",
+      "valueString": "Married"
+    }
+  ],
+  "gender": "male",
+  "identifier": [
+    {
+      "value": "93763"
+    }
+  ],
+  "resourceType": "Patient"
+}
+
+
+ITEM 4
+pair_id: NHANES-P15-02-semi_structured
+resource_type: Patient
+input_style: semi_structured
+input_text:
+DEMO_J
+participant: 93763
+Gender = Male
+Age in years at screening = 40 years
+Race/Hispanic origin = Non-Hispanic White
+Country of birth = Born in 50 US states or Washington, DC
+Citizenship status = Citizen by birth or naturalization
+Marital status = Married
+target_fhir_json:
+{
+  "extension": [
+    {
+      "url": "urn:nhanes:age_years",
+      "valueInteger": 40
+    },
+    {
+      "url": "urn:nhanes:race_ethnicity",
+      "valueString": "Non-Hispanic White"
+    },
+    {
+      "url": "urn:nhanes:country_of_birth",
+      "valueString": "Born in 50 US states or Washington, DC"
+    },
+    {
+      "url": "urn:nhanes:citizenship_status",
+      "valueString": "Citizen by birth or naturalization"
+    },
+    {
+      "url": "urn:nhanes:marital_status",
+      "valueString": "Married"
+    }
+  ],
+  "gender": "male",
+  "identifier": [
+    {
+      "value": "93763"
+    }
+  ],
+  "resourceType": "Patient"
+}
+
+
+ITEM 5
+pair_id: NHANES-P15-03-concise_clinical
+resource_type: Patient
+input_style: concise_clinical
+input_text:
+Gender: Male; Age in years at screening: 8 years; Race/Hispanic origin: Non-Hispanic Black; Country of birth: Born in 50 US states or Washington, DC; Citizenship status: Citizen by birth or naturalization
+target_fhir_json:
+{
+  "extension": [
+    {
+      "url": "urn:nhanes:age_years",
+      "valueInteger": 8
+    },
+    {
+      "url": "urn:nhanes:race_ethnicity",
+      "valueString": "Non-Hispanic Black"
+    },
+    {
+      "url": "urn:nhanes:country_of_birth",
+      "valueString": "Born in 50 US states or Washington, DC"
+    },
+    {
+      "url": "urn:nhanes:citizenship_status",
+      "valueString": "Citizen by birth or naturalization"
+    }
+  ],
+  "gender": "male",
+  "identifier": [
+    {
+      "value": "93737"
+    }
+  ],
+  "resourceType": "Patient"
+}
+
+
+ITEM 6
+pair_id: NHANES-P15-03-semi_structured
+resource_type: Patient
+input_style: semi_structured
+input_text:
+DEMO_J
+participant: 93737
+Gender = Male
+Age in years at screening = 8 years
+Race/Hispanic origin = Non-Hispanic Black
+Country of birth = Born in 50 US states or Washington, DC
+Citizenship status = Citizen by birth or naturalization
+target_fhir_json:
+{
+  "extension": [
+    {
+      "url": "urn:nhanes:age_years",
+      "valueInteger": 8
+    },
+    {
+      "url": "urn:nhanes:race_ethnicity",
+      "valueString": "Non-Hispanic Black"
+    },
+    {
+      "url": "urn:nhanes:country_of_birth",
+      "valueString": "Born in 50 US states or Washington, DC"
+    },
+    {
+      "url": "urn:nhanes:citizenship_status",
+      "valueString": "Citizen by birth or naturalization"
+    }
+  ],
+  "gender": "male",
+  "identifier": [
+    {
+      "value": "93737"
+    }
+  ],
+  "resourceType": "Patient"
+}
+
+
+ITEM 7
+pair_id: NHANES-P15-04-concise_clinical
+resource_type: Patient
+input_style: concise_clinical
+input_text:
+Gender: Female; Age in years at screening: 61 years; Race/Hispanic origin: Other Hispanic; Country of birth: Others; Citizenship status: Not a citizen of the US; Marital status: Married
+target_fhir_json:
+{
+  "extension": [
+    {
+      "url": "urn:nhanes:age_years",
+      "valueInteger": 61
+    },
+    {
+      "url": "urn:nhanes:race_ethnicity",
+      "valueString": "Other Hispanic"
+    },
+    {
+      "url": "urn:nhanes:country_of_birth",
+      "valueString": "Others"
+    },
+    {
+      "url": "urn:nhanes:citizenship_status",
+      "valueString": "Not a citizen of the US"
+    },
+    {
+      "url": "urn:nhanes:marital_status",
+      "valueString": "Married"
+    }
+  ],
+  "gender": "female",
+  "identifier": [
+    {
+      "value": "93985"
+    }
+  ],
+  "resourceType": "Patient"
+}
+
+
+ITEM 8
+pair_id: NHANES-P15-04-semi_structured
+resource_type: Patient
+input_style: semi_structured
+input_text:
+DEMO_J
+participant: 93985
+Gender = Female
+Age in years at screening = 61 years
+Race/Hispanic origin = Other Hispanic
+Country of birth = Others
+Citizenship status = Not a citizen of the US
+Marital status = Married
+target_fhir_json:
+{
+  "extension": [
+    {
+      "url": "urn:nhanes:age_years",
+      "valueInteger": 61
+    },
+    {
+      "url": "urn:nhanes:race_ethnicity",
+      "valueString": "Other Hispanic"
+    },
+    {
+      "url": "urn:nhanes:country_of_birth",
+      "valueString": "Others"
+    },
+    {
+      "url": "urn:nhanes:citizenship_status",
+      "valueString": "Not a citizen of the US"
+    },
+    {
+      "url": "urn:nhanes:marital_status",
+      "valueString": "Married"
+    }
+  ],
+  "gender": "female",
+  "identifier": [
+    {
+      "value": "93985"
+    }
+  ],
+  "resourceType": "Patient"
+}
+
+
+ITEM 9
+pair_id: NHANES-P15-05-concise_clinical
+resource_type: Patient
+input_style: concise_clinical
+input_text:
+Gender: Male; Age in years at screening: 56 years; Race/Hispanic origin: Non-Hispanic Asian; Country of birth: Others; Citizenship status: Citizen by birth or naturalization; Marital status: Married
+target_fhir_json:
+{
+  "extension": [
+    {
+      "url": "urn:nhanes:age_years",
+      "valueInteger": 56
+    },
+    {
+      "url": "urn:nhanes:race_ethnicity",
+      "valueString": "Non-Hispanic Asian"
+    },
+    {
+      "url": "urn:nhanes:country_of_birth",
+      "valueString": "Others"
+    },
+    {
+      "url": "urn:nhanes:citizenship_status",
+      "valueString": "Citizen by birth or naturalization"
+    },
+    {
+      "url": "urn:nhanes:marital_status",
+      "valueString": "Married"
+    }
+  ],
+  "gender": "male",
+  "identifier": [
+    {
+      "value": "93711"
+    }
+  ],
+  "resourceType": "Patient"
+}
+
+
+ITEM 10
+pair_id: NHANES-P15-05-semi_structured
+resource_type: Patient
+input_style: semi_structured
+input_text:
+DEMO_J
+participant: 93711
+Gender = Male
+Age in years at screening = 56 years
+Race/Hispanic origin = Non-Hispanic Asian
+Country of birth = Others
+Citizenship status = Citizen by birth or naturalization
+Marital status = Married
+target_fhir_json:
+{
+  "extension": [
+    {
+      "url": "urn:nhanes:age_years",
+      "valueInteger": 56
+    },
+    {
+      "url": "urn:nhanes:race_ethnicity",
+      "valueString": "Non-Hispanic Asian"
+    },
+    {
+      "url": "urn:nhanes:country_of_birth",
+      "valueString": "Others"
+    },
+    {
+      "url": "urn:nhanes:citizenship_status",
+      "valueString": "Citizen by birth or naturalization"
+    },
+    {
+      "url": "urn:nhanes:marital_status",
+      "valueString": "Married"
+    }
+  ],
+  "gender": "male",
+  "identifier": [
+    {
+      "value": "93711"
+    }
+  ],
+  "resourceType": "Patient"
+}

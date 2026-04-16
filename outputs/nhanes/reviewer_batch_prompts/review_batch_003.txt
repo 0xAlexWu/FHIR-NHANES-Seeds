@@ -1,0 +1,304 @@
+You are acting as an external reviewer in a clinical-data-to-FHIR pairing evaluation workflow.
+
+You will review multiple candidate paired samples.
+Apply the same scoring rubric independently to each item.
+Do not compare items with each other.
+Judge each pair only on its own merits.
+
+For each item, return:
+- pair_id
+- faithfulness
+- unsupported_fact
+- omission
+- naturalness
+- context_leakage
+- short_rationale
+- flag_type
+
+Scoring rubric:
+- faithfulness: 1 = faithful, 0 = not faithful
+- unsupported_fact: 1 = yes, 0 = no
+- omission: 1 = yes, 0 = no
+- naturalness: 1 to 5
+- context_leakage: 1 = yes, 0 = no
+
+Allowed flag_type values:
+- none
+- possible_hallucination
+- possible_omission
+- awkward_input
+- context_leakage
+- style_uncertainty
+- other
+
+Review principles:
+1. Only judge alignment between the shown input text and the shown target FHIR JSON.
+2. Do not assume facts from linked resources unless explicitly present in the shown target JSON.
+3. Do not reward unsupported extra detail.
+4. Be conservative about unsupported facts.
+5. Be conservative about omission of core information.
+6. If the target is sparse, do not punish the input for not containing unavailable details.
+
+Return only a JSON array.
+Do not include markdown.
+Do not include any text before or after the JSON array.
+
+
+ITEM 1
+pair_id: NHANES-P15-11-concise_clinical
+resource_type: Observation
+input_style: concise_clinical
+input_text:
+Glycohemoglobin: 6.2 %
+target_fhir_json:
+{
+  "code": {
+    "text": "Glycohemoglobin"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93708"
+    }
+  },
+  "valueQuantity": {
+    "unit": "%",
+    "value": 6.2
+  }
+}
+
+
+ITEM 2
+pair_id: NHANES-P15-11-semi_structured
+resource_type: Observation
+input_style: semi_structured
+input_text:
+GHB_J
+participant: 93708
+measure = Glycohemoglobin
+value = 6.2
+unit = %
+target_fhir_json:
+{
+  "code": {
+    "text": "Glycohemoglobin"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93708"
+    }
+  },
+  "valueQuantity": {
+    "unit": "%",
+    "value": 6.2
+  }
+}
+
+
+ITEM 3
+pair_id: NHANES-P15-12-concise_clinical
+resource_type: Observation
+input_style: concise_clinical
+input_text:
+Total Cholesterol: 176 mg/dL
+target_fhir_json:
+{
+  "code": {
+    "text": "Total Cholesterol"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93709"
+    }
+  },
+  "valueQuantity": {
+    "unit": "mg/dL",
+    "value": 176
+  }
+}
+
+
+ITEM 4
+pair_id: NHANES-P15-12-semi_structured
+resource_type: Observation
+input_style: semi_structured
+input_text:
+TCHOL_J
+participant: 93709
+measure = Total Cholesterol
+value = 176
+unit = mg/dL
+target_fhir_json:
+{
+  "code": {
+    "text": "Total Cholesterol"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93709"
+    }
+  },
+  "valueQuantity": {
+    "unit": "mg/dL",
+    "value": 176
+  }
+}
+
+
+ITEM 5
+pair_id: NHANES-P15-13-concise_clinical
+resource_type: Observation
+input_style: concise_clinical
+input_text:
+Creatinine, refrigerated serum: 0.77 mg/dL
+target_fhir_json:
+{
+  "code": {
+    "text": "Creatinine, refrigerated serum"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93712"
+    }
+  },
+  "valueQuantity": {
+    "unit": "mg/dL",
+    "value": 0.77
+  }
+}
+
+
+ITEM 6
+pair_id: NHANES-P15-13-semi_structured
+resource_type: Observation
+input_style: semi_structured
+input_text:
+BIOPRO_J
+participant: 93712
+measure = Creatinine, refrigerated serum
+value = 0.77
+unit = mg/dL
+target_fhir_json:
+{
+  "code": {
+    "text": "Creatinine, refrigerated serum"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93712"
+    }
+  },
+  "valueQuantity": {
+    "unit": "mg/dL",
+    "value": 0.77
+  }
+}
+
+
+ITEM 7
+pair_id: NHANES-P15-14-concise_clinical
+resource_type: Observation
+input_style: concise_clinical
+input_text:
+Albumin, refrigerated serum: 4.3 g/dL
+target_fhir_json:
+{
+  "code": {
+    "text": "Albumin, refrigerated serum"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93713"
+    }
+  },
+  "valueQuantity": {
+    "unit": "g/dL",
+    "value": 4.3
+  }
+}
+
+
+ITEM 8
+pair_id: NHANES-P15-14-semi_structured
+resource_type: Observation
+input_style: semi_structured
+input_text:
+BIOPRO_J
+participant: 93713
+measure = Albumin, refrigerated serum
+value = 4.3
+unit = g/dL
+target_fhir_json:
+{
+  "code": {
+    "text": "Albumin, refrigerated serum"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93713"
+    }
+  },
+  "valueQuantity": {
+    "unit": "g/dL",
+    "value": 4.3
+  }
+}
+
+
+ITEM 9
+pair_id: NHANES-P15-15-concise_clinical
+resource_type: Observation
+input_style: concise_clinical
+input_text:
+Total Calcium: 9.1 mg/dL
+target_fhir_json:
+{
+  "code": {
+    "text": "Total Calcium"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93714"
+    }
+  },
+  "valueQuantity": {
+    "unit": "mg/dL",
+    "value": 9.1
+  }
+}
+
+
+ITEM 10
+pair_id: NHANES-P15-15-semi_structured
+resource_type: Observation
+input_style: semi_structured
+input_text:
+BIOPRO_J
+participant: 93714
+measure = Total Calcium
+value = 9.1
+unit = mg/dL
+target_fhir_json:
+{
+  "code": {
+    "text": "Total Calcium"
+  },
+  "resourceType": "Observation",
+  "subject": {
+    "identifier": {
+      "value": "93714"
+    }
+  },
+  "valueQuantity": {
+    "unit": "mg/dL",
+    "value": 9.1
+  }
+}

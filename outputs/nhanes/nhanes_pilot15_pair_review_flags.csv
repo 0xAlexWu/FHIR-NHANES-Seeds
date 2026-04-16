@@ -1,0 +1,21 @@
+pair_id,seed_id,resource_type,flag_type,flag_reason
+NHANES-P15-01-concise_clinical,NHANES-P15-01,Patient,coding_uncertainty,Patient target preserves NHANES-specific demographics in custom extension-style fields rather than standard coded elements.
+NHANES-P15-01-semi_structured,NHANES-P15-01,Patient,coding_uncertainty,Patient target preserves NHANES-specific demographics in custom extension-style fields rather than standard coded elements.
+NHANES-P15-04-concise_clinical,NHANES-P15-04,Patient,coding_uncertainty,Patient target preserves NHANES-specific demographics in custom extension-style fields rather than standard coded elements.
+NHANES-P15-04-semi_structured,NHANES-P15-04,Patient,coding_uncertainty,Patient target preserves NHANES-specific demographics in custom extension-style fields rather than standard coded elements.
+NHANES-P15-05-concise_clinical,NHANES-P15-05,Patient,coding_uncertainty,Patient target preserves NHANES-specific demographics in custom extension-style fields rather than standard coded elements.
+NHANES-P15-05-semi_structured,NHANES-P15-05,Patient,coding_uncertainty,Patient target preserves NHANES-specific demographics in custom extension-style fields rather than standard coded elements.
+NHANES-P15-09-concise_clinical,NHANES-P15-09,Observation,unit_sensitivity,The measured value depends on exact unit preservation and should be checked before promotion.
+NHANES-P15-09-semi_structured,NHANES-P15-09,Observation,unit_sensitivity,The measured value depends on exact unit preservation and should be checked before promotion.
+NHANES-P15-10-concise_clinical,NHANES-P15-10,Observation,unit_sensitivity,The measured value depends on exact unit preservation and should be checked before promotion.
+NHANES-P15-10-semi_structured,NHANES-P15-10,Observation,unit_sensitivity,The measured value depends on exact unit preservation and should be checked before promotion.
+NHANES-P15-11-concise_clinical,NHANES-P15-11,Observation,unit_sensitivity,The measured value depends on exact unit preservation and should be checked before promotion.
+NHANES-P15-11-semi_structured,NHANES-P15-11,Observation,unit_sensitivity,The measured value depends on exact unit preservation and should be checked before promotion.
+NHANES-P15-12-concise_clinical,NHANES-P15-12,Observation,unit_sensitivity,The measured value depends on exact unit preservation and should be checked before promotion.
+NHANES-P15-12-semi_structured,NHANES-P15-12,Observation,unit_sensitivity,The measured value depends on exact unit preservation and should be checked before promotion.
+NHANES-P15-13-concise_clinical,NHANES-P15-13,Observation,unit_sensitivity,The measured value depends on exact unit preservation and should be checked before promotion.
+NHANES-P15-13-semi_structured,NHANES-P15-13,Observation,unit_sensitivity,The measured value depends on exact unit preservation and should be checked before promotion.
+NHANES-P15-14-concise_clinical,NHANES-P15-14,Observation,unit_sensitivity,The measured value depends on exact unit preservation and should be checked before promotion.
+NHANES-P15-14-semi_structured,NHANES-P15-14,Observation,unit_sensitivity,The measured value depends on exact unit preservation and should be checked before promotion.
+NHANES-P15-15-concise_clinical,NHANES-P15-15,Observation,unit_sensitivity,The measured value depends on exact unit preservation and should be checked before promotion.
+NHANES-P15-15-semi_structured,NHANES-P15-15,Observation,unit_sensitivity,The measured value depends on exact unit preservation and should be checked before promotion.

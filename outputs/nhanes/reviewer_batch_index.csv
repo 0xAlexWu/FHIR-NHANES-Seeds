@@ -1,0 +1,4 @@
+batch_id,file_name,start_pair_id,end_pair_id,item_count
+review_batch_001,review_batch_001.txt,NHANES-P15-01-concise_clinical,NHANES-P15-05-semi_structured,10
+review_batch_002,review_batch_002.txt,NHANES-P15-06-concise_clinical,NHANES-P15-10-semi_structured,10
+review_batch_003,review_batch_003.txt,NHANES-P15-11-concise_clinical,NHANES-P15-15-semi_structured,10
